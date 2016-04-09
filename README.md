@@ -1,4 +1,4 @@
-Photoshop To Android Exporter Script 1.1
+PHP for login
 =================================
 
 A very simple php script for login via mysql.
