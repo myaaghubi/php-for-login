@@ -10,5 +10,11 @@ $email_cookie_key   = $site_security_key . "_email";
 $password_cookie_key= $site_security_key . "_password";
 
 $connection = mysqli_connect($db_address, $db_username, $db_password, $db_name) or die(mysql_error()); 
-mysql_select_db($db_name) or die(mysql_error()); 
+
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+}
+
+mysqli_select_db($connection, $db_name) or die(mysql_error()); 
 ?>

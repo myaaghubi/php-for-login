@@ -1,0 +1,70 @@
+body{
+	background:#fcfcfc;
+	background:url(back.jpg);
+}
+input {
+	border:0px #bfbfbf solid;
+	padding:7px;
+	margin:0;
+	font-size:16px;
+	background-color:#f9f9f9 !important;
+}
+input[type="email"], input[type="password"], input[type="text"] {
+	width:220px;
+}
+
+.loginsection, .usersection{
+	display: inline-block;
+	height:auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	
+	background:#ffffff;
+	border:1px #cfcfcf solid;
+}
+.usersection{
+	width:590px;
+}
+
+h2{
+	margin-left:25px;
+	margin-bottom:-10px;
+	background:#ffffff;
+}
+
+.loginsection form, .usersection{
+	padding:20px 25px;
+}
+
+.usersection {
+	padding:20px 25px;
+}
+.updateprofilesection {
+	float:left;
+	padding:20px 25px;
+}
+.addusersection {
+	float:right;
+	padding:20px 25px;
+}
+.message{
+	padding:5px 25px;
+	margin-bottom:-15px;
+	border:0px solid #000000;
+	border-radius:5px;
+}
+.hello{
+	margin-top:-40px;
+	margin-bottom:35px;
+}
+.red{
+	background:#ff0000;
+}
+.green{
+	background:#00FF00;
+}
+.yellow{
+	background:#ffde00;
+}

@@ -52,20 +52,27 @@ if (isset($_POST['submit'])) {
 }
 else {
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login page</title>
+	<link rel="stylesheet" type="text/css" href="assets/style.css">
+</head>
+<body>
+	<div class="loginsection">
+	<h2>Login</h2> 
 	<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post"> 
-	<table border="0"> 
-	<tr><td colspan=2><h1>Login</h1></td></tr> 
-	<tr><td>Email:</td><td> 
-	<input type="email" name="email" maxlength="50"> 
-	</td></tr> 
-	<tr><td>Password:</td><td> 
-	<input type="password" name="password" maxlength="50"> 
-	</td></tr> 
-	<tr><td colspan="2" align="right"> 
-	<input type="submit" name="submit" value="Login"> 
-	</td></tr> 
-	</table> 
+		<table border="0"> 
+			<tr><td><input type="email" name="email" placeholder="Email" maxlength="50"></td></tr> 
+			<tr><td><input type="password" name="password" placeholder="Password" maxlength="50"></td></tr> 
+			<tr><td colspan="2" align="right"> 
+				<input type="submit" name="submit" value="Login"> 
+			</td></tr> 
+		</table> 
 	</form> 
+	</div>
+</body>
+</html>
 <?php 
 }
 ?> 
