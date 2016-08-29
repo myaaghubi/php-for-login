@@ -1,4 +1,4 @@
-PHP for login 1.1.0
+PHP for login 1.1.1
 =================================
 
 A simple php script for login via mysql.
