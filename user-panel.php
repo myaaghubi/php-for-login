@@ -10,7 +10,7 @@ $hello = "";
 if(isset($_COOKIE[$email_cookie_key])){ 
 	$email = $_COOKIE[$email_cookie_key]; 
 	$pass = $_COOKIE[$password_cookie_key]; 
-	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '$email'")or die(mysqli_error()); 
+	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '$email'")or die(mysqli_error($connection)); 
 
 	$info = mysqli_fetch_array( $row );
 	
@@ -25,26 +25,41 @@ if(isset($_COOKIE[$email_cookie_key])){
 			$message='Full name is required.';
 		} else {
 			if(isset($_POST['password'])){
-				if (!isset($_POST['password2'])){
+				if (!isset($_POST['password2']))
 					$message='Re-Password is required.';
-				} else if ($_POST['password']!=$_POST['password2']){
+				else if ($_POST['password']!=$_POST['password2'])
 					$message='Password and Re-Password is not match.';
-				}else if ($_POST['password']==$_POST['password2']){
-					$row = mysqli_query($connection, "UPDATE users set fullname='".$_POST['fullname']."' where email='".$email."'")or die(mysql_error());
+				else if ($_POST['password']==$_POST['password2']){
+					$fullname = mysqli_real_escape_string($connection, $_POST['fullname']);
+					$password = mysqli_real_escape_string($connection, $_POST['password']);
+					
+					if (strlen($fullname)==0||strlen($password)==0)
+						$message="Input error! Please insert valid data.";
+					else {
+						$row = mysqli_query($connection, "UPDATE users set password = '".md5($password)."', fullname='".$fullname."' where email='".$email."'")or die(mysqli_error($connection));
+						$message = "Updated successfuly";
+						$message_type = 1;
+					}
+				}
+			} else {
+				$fullname = mysqli_real_escape_string($connection, $_POST['fullname']);
+				$password = mysqli_real_escape_string($connection, $_POST['password']);
+				
+					
+				if (strlen($fullname)==0||strlen($password)==0)
+					$message="Input error! Please insert valid data.";
+				else {
+					$row = mysqli_query($connection, "UPDATE users set fullname='".$fullname."' where email='".$email."'")or die(mysqli_error($connection));
 					$message = "Updated successfuly";
 					$message_type = 1;
 				}
-			} else {
-				$row = mysqli_query($connection, "UPDATE users set password = '".$_POST['password']."', fullname='".$_POST['fullname']."' where email='".$email."'")or die(mysql_error());
-				$message = "Updated successfuly";
-				$message_type = 1;
 			}
 		}
 	} else if (isset($_POST['adduser'])) {
 		if(!$_POST['au_email']){
 			$message='Email is required.';
 		} else {
-			$row = mysqli_query($connection,"SELECT email FROM users WHERE email = '".$_POST['au_email']."'") or die(mysql_error());
+			$row = mysqli_query($connection,"SELECT email FROM users WHERE email = '".$_POST['au_email']."'") or die(mysqli_error($connection));
 			$row2 = mysqli_num_rows($row);
 
 			//if the name exists it gives an error
@@ -58,14 +73,18 @@ if(isset($_COOKIE[$email_cookie_key])){
 				else if ($_POST['au_password']!=$_POST['au_password2'])
 					$message='Password and Re-Password is not match.';
 				else if ($_POST['au_password']==$_POST['au_password2']){
-					$row = mysqli_query($connection, "INSERT INTO users (fullname, email, password) VALUES ('".$_POST['au_fullname']."', '".$_POST['au_email']."', '".md5($_POST['au_password'])."')")or die(mysql_error());
-					$message = "New user added successfuly";
-					$message_type = 1;
+					$fullname = mysqli_real_escape_string($connection, $_POST['fullname']);
+					$email = mysqli_real_escape_string($connection, $_POST['email']);
+					$password = mysqli_real_escape_string($connection, $_POST['password']);
+					
+					if (strlen($fullname)==0||strlen($email)==0||strlen($password)==0)
+						$message="Input error! Please insert valid data.";
+					else {
+						$row = mysqli_query($connection, "INSERT INTO users (fullname, email, password) VALUES ('".$fullname."', '".$email."', '".md5($password)."')")or die(mysqli_error($connection));
+						$message = "New user added successfuly";
+						$message_type = 1;
+					}
 				}
-			} else {
-				$row = mysqli_query($connection, "INSERT INTO users (fullname, email, password) VALUES ('".$_POST['au_fullname']."', '".$_POST['au_email']."', '".md5($_POST['au_password'])."')")or die(mysql_error());
-				$message = "New user added successfuly";
-				$message_type = 1;
 			}
 		}
 	}

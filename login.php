@@ -2,13 +2,13 @@
 
 //load database configuration 
 include 'db-config.php';
-
+$message = "";
 //first check logined cookie
 if(isset($_COOKIE[$email_cookie_key])){
 	
 	$email = $_COOKIE[$email_cookie_key]; 
 	$password = $_COOKIE[$password_cookie_key];
-	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '$email'")or die(mysql_error());
+	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '$email'")or die(mysqli_error($connection));
 
 	while($info = mysqli_fetch_array( $row )){
 		if ($password != $info['password']){}
@@ -26,31 +26,29 @@ if (isset($_POST['submit'])) {
 	if(!$_POST['password']){
 		die('Password is required.');
 	}
+	$email = mysqli_real_escape_string($connection, $_POST['email']);
+	$password = mysqli_real_escape_string($connection, $_POST['password']);
 
-	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '".$_POST['email']."'")or die(mysql_error());
+	$row = mysqli_query($connection, "SELECT * FROM users WHERE email = '".$email."'")or die(mysqli_error($connection));
 
 	$row2 = mysqli_num_rows($row);
 	if ($row2 == 0){
-		die('The user "'.$_POST['email'].'" is invalid. <a href="login.php">try again</a>.');
+		$message='This email does not exist.';
 	}
 	while($info = mysqli_fetch_array( $row )){
-		$_POST['password'] = stripslashes($_POST['password']);
-		$info['password'] = stripslashes($info['password']);
-		$_POST['password'] = md5($_POST['password']);
+		$password = md5($password);
 
 		//check password validation
-		if ($_POST['password'] != $info['password']){
-			die('Incorrect password! <a href="login.php">try again</a>.');
+		if ($password != $info['password']){
+			$message='Incorrect password!';
 		} else{
-			$_POST['email'] = stripslashes($_POST['email']); 
 			$week = time() + (7 * 3600); 
-			setcookie($email_cookie_key, $_POST['email'], $week); 
-			setcookie($password_cookie_key, $_POST['password'], $week);	 
+			setcookie($email_cookie_key, $email, $week); 
+			setcookie($password_cookie_key, $password, $week);	 
 			header("Location: user-panel.php"); 
 		}
 	}
 }
-else {
 ?>
 <!DOCTYPE html>
 <html>
@@ -61,18 +59,17 @@ else {
 <body>
 	<div class="loginsection">
 	<h2>Login</h2> 
+
 	<form action="<?php echo $_SERVER['PHP_SELF']?>" method="post"> 
 		<table border="0"> 
 			<tr><td><input type="email" name="email" placeholder="Email" maxlength="50"></td></tr> 
 			<tr><td><input type="password" name="password" placeholder="Password" maxlength="50"></td></tr> 
-			<tr><td colspan="2" align="right"> 
-				<input type="submit" name="submit" value="Login"> 
+			<tr><td colspan="2" align="left"> 
+				<?php echo '<span style="color:red">'.$message.'</span>'; ?>
+				<input type="submit" name="submit" style="float:right" value="Login"> 
 			</td></tr> 
 		</table> 
 	</form> 
 	</div>
 </body>
 </html>
-<?php 
-}
-?> 
