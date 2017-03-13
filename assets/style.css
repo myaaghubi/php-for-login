@@ -4,13 +4,30 @@ body{
 }
 input {
 	border:0px #bfbfbf solid;
-	padding:7px;
+	padding:9px;
 	margin:0;
-	font-size:16px;
+	font-size:14px;
+	border:1px #f4f4f4 solid;
 	background-color:#f9f9f9 !important;
+	border-radius:2px;
 }
+
 input[type="email"], input[type="password"], input[type="text"] {
 	width:220px;
+}
+
+input[type="submit"] {
+	padding:9px 15px;
+	cursor:pointer;
+}
+
+input[type="submit"]:hover {
+	background-color:#f4f4f4 !important;
+}
+
+input[type="checkbox"], label {
+	font-size:14px;
+	margin:2px;
 }
 
 .loginsection, .usersection{
@@ -23,9 +40,10 @@ input[type="email"], input[type="password"], input[type="text"] {
 	
 	background:#ffffff;
 	border:1px #cfcfcf solid;
+	border-radius:2px;
 }
 .usersection{
-	width:590px;
+	width:600px;
 }
 
 h2{

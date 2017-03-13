@@ -1,4 +1,4 @@
-PHP for login 1.1.1
+PHP for login 1.2.0
 =================================
 
 A simple php script for login via mysql.
@@ -24,15 +24,20 @@ ALTER TABLE `users` MODIFY `ID` mediumint(9) NOT NULL AUTO_INCREMENT;
 ```
 Default email/pass is admin@admin.com/admin.
 
-Setup the db-config.php file
+Setup the config.php file
 ---
 ```
-$db_address  = ""; // "127.0.0.1";
-$db_name     = ""; // "test";
-$db_username = ""; // "root";
-$db_password = ""; // "";
+$config = array(
+	"db_address" => ""; // "127.0.0.1"
+	"db_name" => ""; // "test"
+	"db_username" => ""; // "root"
+	"db_password" => ""; // "123456"
+	"session_ex" => 30 * 60, // session expire time(in second)
+	"cookie_ex" => 7 * 3600, // cookie expire time(in second)
+	"s_key" => "try_to_set_strong_key", // security key, you can mix it by user variables
+);
 
-$site_security_key = ""; //try to set strong key
+
 ```
 You have done it!
 
@@ -40,7 +45,7 @@ You have done it!
 License
 ---
 ```
-Copyright 2016 Mohammad Yaghobi
+Copyright 2017 Mohammad Yaghobi
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
