@@ -3,7 +3,7 @@ PHP for login 1.2.0
 
 A simple and safe php script for login via mysql.
 <br>
-![Alt text](screenshot/shot1.jpg?raw=true "ScreenShot")
+![Alt text](screenshot/shot1.jpg?raw=true "ScreenShot php for login")
 
 How to setup script
 ---
