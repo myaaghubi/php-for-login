@@ -47,10 +47,10 @@ class php_for_login {
 	function doLogin($user, $pass, $save) {
 		global $config;
 
-		$email = mysqli_real_escape_string($this->db, $user); // mysqli_real_escape_string is useful but not enough! is not necessary in this case
-		$password = mysqli_real_escape_string($this->db, $pass); // mysqli_real_escape_string is useful but not enough! is not necessary in this case
+		$email = mysqli_real_escape_string($this->db, $user); // mysqli_real_escape_string is necessary but not enough! 
+		$password = mysqli_real_escape_string($this->db, $pass); // mysqli_real_escape_string is necessary but not enough!
 
-		$pss = md5($password);
+		$pss = md5($password); // I did't use salt in this case to be easey but it's very usefull
 		$query = mysqli_query($this->db, "SELECT id FROM users WHERE email='$email' and password='$pss'") or die(mysqli_error($this->db));
 
 		if (mysqli_num_rows($query) <= 0) {
@@ -86,7 +86,6 @@ class php_for_login {
 	function updateUser($fullname="", $email, $nemail, $pass, $npass) {
 		global $config;
 
-		// mysqli_real_escape_string is useful but not enough! is not necessary in this case
 		$fullname = mysqli_real_escape_string($this->db, $fullname);
 		$email = mysqli_real_escape_string($this->db, $email); 
 		$nemail = mysqli_real_escape_string($this->db, $nemail); 
